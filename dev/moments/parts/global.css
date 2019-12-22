@@ -1,0 +1,11 @@
+.bar_butt{
+    height: 1.4rem;
+    width: 2.5rem;
+    border-radius: 0.3rem;
+    margin: 0.2rem 0.2rem;
+    background: rgba(255, 255, 255, 0.699);
+    font-size: 0.9rem;
+}
+.bar_butt:hover{
+    background: #474747;
+}

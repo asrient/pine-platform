@@ -1,0 +1,68 @@
+<html>
+    <link rel="stylesheet" type="text/css" href="common://common.css"/>
+    <script type="text/javascript" src="common://apis.js"></script>
+ <body>
+   <div id="all" class="center-col">
+    
+ <div class="center size-xl ink-dark base-semibold">
+      Hello!
+   </div>
+<div class="center size-m"><img class="icon" src="source://icon.png"/></div>
+   <br/>
+   <div class="center">
+    <button class="button-blue-light" onclick="notify()">View</button>
+   </div>
+
+   <br/>
+   <div id="infobox" class="ink-light"></div>
+   </div>
+  
+</body>   
+<style>
+#all{
+  height: 100%;
+}
+</style>
+
+<script>
+
+pine.init();
+
+window.setTimeout(()=>{
+ // window.location.href="https://google.com";
+},3000);
+
+
+pine.info((info)=>{
+  document.getElementById('infobox').innerHTML=info;
+})
+
+pine.isDarkMode((is)=>{
+if(is){
+  document.getElementById("all").style.backgroundColor="#272727";
+}
+})
+
+notify=()=>{
+  let myNotification = new Notification('Amy Stone', {
+    body: 'TEXT: Meet me in 15min'
+  })
+  
+  myNotification.onclick = () => {
+    console.log('Notification clicked')
+  }
+}
+/*
+pine.confirmClose((confirm)=>{
+  confirm(false)
+  pine.alert("I dont want to die");
+  window.setTimeout(()=>{
+    pine.destroy();
+  },3000)
+})
+*/
+
+
+
+</script>
+</html>

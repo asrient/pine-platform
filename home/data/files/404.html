@@ -1,0 +1,41 @@
+<html>
+    <link rel="stylesheet" type="text/css" href="/common.css"/>
+    <script type="text/javascript" src="/apis.js"></script>
+ <body>
+   <div id="all" class="center-col">
+    
+ <div class="center size-l ink-dark base-light">
+      This app is not installed
+   </div>
+ 
+   </div>
+  
+</body>   
+<style>
+#all{
+  height: 100%;
+}
+</style>
+
+<script>
+
+pine.init();
+
+
+
+pine.isDarkMode((is)=>{
+if(is){
+  document.getElementById("all").style.backgroundColor="#272727";
+}
+})
+
+pine.setTitle("");
+pine.setSize(450,250);
+pine.setResizable(false);
+pine.setMaximizable(false);
+pine.setMinimizable(false);
+
+pine.showTitleBar({float:true});
+
+</script>
+</html>

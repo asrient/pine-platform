@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="common://common.css" />
+  <script type="text/javascript" src="common://apis.js"></script>
+  <title>Moments</title>
+</head>
+
+<body>
+  <div id="root">
+    <div class="center"> Loading your moments..</div> 
+  </div>
+  </div>
+</body>
+<style>
+  body{
+       background: #ffffff;
+       height:100vh;
+  }
+#root{
+  height: 100vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+::-webkit-scrollbar{
+  width: 9px;
+  margin:2px;
+    }
+    ::-webkit-scrollbar-thumb{
+     display:block;
+     border-radius: 7px;
+     background: #47474757;
+    }
+</style>
+<script>
+    pine.init();
+    pine.dev();
+pine.hideTitleBar();
+pine.setMinimumSize(800,450);
+</script>
+<script type="text/javascript" src="source://moments.js"></script>
+</html>

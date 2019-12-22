@@ -1,0 +1,14 @@
+{
+    "name":"Hello app",
+    "version":"0.0.1",
+    "icon":"./icon.png",
+    "category":"system",
+    "developer":{
+        "name":"Asrient",
+        "email":"asen182000@hotmail.com"
+    },
+    "target":"all",
+    "import":{
+        "react":"5.0.0"
+    }
+}

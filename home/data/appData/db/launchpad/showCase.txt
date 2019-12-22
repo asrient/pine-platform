@@ -1,0 +1,2 @@
+{"id":"id123","name":"Tips","name_space":"lol.pine.about","icon":"id123.png","app_type":"system_app","alwaysOn":true,"_id":"1"}
+{"id":"moments","name":"Moments","name_space":"core.pine.moments","icon":"moments.png","app_type":"system_app","alwaysOn":true,"_id":"2"}

@@ -1,0 +1,14 @@
+.thumb{
+height:8rem;
+width:8rem;
+margin:0.5rem;
+background-color:rgb(212, 212, 212);
+background-size: cover;
+background-repeat: no-repeat;
+background-position: center;
+}
+.thumbs_grid{
+    display:grid;
+    max-width: 35rem;
+    grid-template-columns: 25% 25% 25% 25%;
+}

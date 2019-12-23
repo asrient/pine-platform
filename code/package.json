@@ -153,7 +153,6 @@
     "spdx-expression-parse": "^3.0.0",
     "spdx-license-ids": "^3.0.5",
     "sprintf-js": "^1.0.3",
-    "sqlite3": "^4.0.9",
     "stat-mode": "^0.3.0",
     "string-width": "^3.1.0",
     "strip-ansi": "^5.2.0",

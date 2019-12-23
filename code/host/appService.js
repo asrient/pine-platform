@@ -139,19 +139,10 @@ function InitIAC() {
 
 
 function InitDb() {
-  var sqlite=require('sqlite3').verbose();
   var Datastore = require('nedb');
   var dbPath = process.env['dbPath'];
-  return ((path,type='nosql') => {
-    if(type=='nosql')
+  return ((path) => {
     return new Datastore({ filename: dbPath + '/' + path, autoload: true });
-    else if(type='sql'){
-     return new sqlite.Database(dbPath + '/' + path);
-    }
-    else{
-      console.error('Invalid store type');
-      return null;
-    }
   })
 }
 

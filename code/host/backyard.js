@@ -8,6 +8,8 @@ var Datastore = require('nedb');
 var dir = app.getAppPath();
 var dataDir = null;
 var appsFile = null;
+var airSync = require('./airSync.js');
+var appInstaller = require('./appInstaller.js');
 
 
 ipcMain.on('relay', (event, data) => {
@@ -213,12 +215,19 @@ var runtime = {
                         done(false);
                     }
                 })
-
-
-
+                this.activeApps[appId].appService.set('installApp', (path, done) => {
+                    appInstaller.install(appId,dataDir + '/data/appData/files/' + appId + '/'+ path,done);
+                })
+                this.activeApps[appId].appService.set('uninstallApp', (id, done) => {
+                    appInstaller.uninstall(appId,id,done);
+                })
+                
                 service.on('message', (msg) => {
                     if (msg.type == 'relay') {
                         this.activeApps[appId].boxes[msg.to].send('relay', msg.body);
+                    }
+                    else if(msg.type=='airSync-send'){
+                        airSync.send(msg.body);
                     }
                     else if (msg.type == 'iac-request') {
                         var ToNameSpace = msg.body.to;
@@ -293,7 +302,7 @@ var runtime = {
                                 this.activeApps[appId].appService.kill()
                             }
                             if (this.activeApps[appId] != undefined) {
-                               delete this.activeApps[appId] ;
+                                delete this.activeApps[appId];
                             }
                         }
                     }
@@ -308,7 +317,7 @@ var runtime = {
     },
     addBox: function (appId, maincb = function () { }) {
         if (this.activeApps[appId] != undefined) {
-            const pRand=crypto.randomBytes(2).toString();
+            const pRand = crypto.randomBytes(2).toString();
             var props = {
                 width: 1060,
                 height: 640,
@@ -319,11 +328,11 @@ var runtime = {
                 minHeight: 20,
                 minWidth: 40,
                 frame: false,
-                icon:dataDir+'/data/files/'+appId+'/'+this.activeApps[appId].info.icon,
+                icon: dataDir + '/data/files/' + appId + '/' + this.activeApps[appId].info.icon,
                 webPreferences: {
                     nodeIntegration: true,
                     experimentalFeatures: true,
-                    partition: appId+pRand
+                    partition: appId + pRand
                 }
             }
             var box = new BrowserWindow(props)
@@ -339,11 +348,12 @@ var runtime = {
                 },
                 kill: () => {
                     if (box != undefined && box != null) { box.destroy(); }
-                   delete this.activeApps[appId].boxes[boxId];
-                    console.log('releasing box ref',this.activeApps[appId].boxes)
+                    delete this.activeApps[appId].boxes[boxId];
+                    console.log('releasing box ref', this.activeApps[appId].boxes)
                     box = undefined;
                     if (!Object.keys(this.activeApps[appId].boxes).length) {
                         //all boxes closed
+                        this.activeApps[appId].appService.send('all-boxes-closed');
                         if (!(this.activeApps[appId].info.alwaysOn && this.activeApps[appId].info.settings.alwaysOn)) {
                             this.activeApps[appId].appService.kill();
                         }
@@ -357,7 +367,9 @@ var runtime = {
             this.activeApps[appId].boxes[boxId].win.on('closed', () => {
                 console.log('////WINDOW CLOSED////');
                 if (this.activeApps[appId] != undefined) {
-                    if (this.activeApps[appId].appService != null) { this.activeApps[appId].appService.send('relay', { from: boxId, body: { type: 'closed' } }) }
+                    if (this.activeApps[appId].appService != null) {
+                        this.activeApps[appId].appService.send('relay', { from: boxId, body: { type: 'closed' } })
+                    }
                     if (this.activeApps[appId].boxes[boxId] != undefined) {
                         //box ref still there
                         this.activeApps[appId].boxes[boxId].kill();
@@ -397,7 +409,7 @@ var runtime = {
         else {
 
             if (Object.keys(this.activeApps[appId].boxes).length) {
-                console.log('no of boxes attached:',Object.keys(this.activeApps[appId].boxes).length)
+                console.log('no of boxes attached:', Object.keys(this.activeApps[appId].boxes).length)
                 //boxes attached already
                 if (!this.activeApps[appId].info.prefer_single_window) {
                     this.addBox(appId);
@@ -408,7 +420,7 @@ var runtime = {
                     cb(true);
                 }
             }
-            else{
+            else {
                 this.addBox(appId);
                 cb(true);
             }
@@ -471,9 +483,46 @@ var iac = {
     }
 }
 
+function airReceiver(nameSpace,data){
+    function ping(appId) {
+        runtime.activeApps[appId].appService.send('airSync-receive', data);
+    }
+    ns.getId(nameSpace, (appId) => {
+        if (appId != null) {
+            if (runtime.activeApps[appId] != undefined) {
+                ping(appId);
+            }
+            else {
+                runtime.startAppService(appId, true, (r) => {
+                    if (r) {
+                        ping(appId);
+                    }
+                    else {
+                        //could not start appService
+                        //Second try, Launch app
+                        runtime.openApp(appId, (r1) => {
+                            if (r1) {
+                                ping(appId);
+                            }
+                            else {
+                                cb(null)
+                            }
+                        })
+                    }
+                })
+            }
+        }
+        else{
+            console.error('AirSync: cant send receive msg, '+appId+' not valid id')
+        }
+    })
+}
+
 module.exports = function (vars) {
     dataDir = vars.dataDir;
-    console.log('dataDir: ', dataDir);
+    airSync.init(vars,airReceiver);
+    appInstaller.init(vars);
+    //console.log('dataDir: ', dataDir);
     appsFile = new Datastore({ filename: dataDir + '/data/core/apps.txt', autoload: true });
     return runtime;
 }

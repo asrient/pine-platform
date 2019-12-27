@@ -254,8 +254,19 @@ var apis = {
 
 Emitter(apis);
 
+function InitAirSync(){
+return({
+  send:function(o){
+    process.send({type:'airSync-send',body:o});
+  }
+})
+}
 
-
+//pine.airSync.send({obj})
+//pine.airSync.on('receive',()=>{})
+//pine.airSync.scan(nameSpace,()=>{})
+//pine.airSync.register(()=>{})
+//pine.airSync.unRegister(()=>{})
 
 function stop(c = 0) {
   console.log('appService stopped with code: ', c);
@@ -275,6 +286,7 @@ function InitSource(){
 
 
 var pine = {
+  airSync:InitAirSync(),
   iac: InitIAC(),
   source: InitSource(),
   store: InitDb(),
@@ -298,6 +310,12 @@ var pine = {
   openAppById:function(id,cb){
     apis.get('openAppById',id,cb);
    },
+   installApp:function(path,cb){
+    apis.get('installApp',path,cb);
+   },
+   uninstallApp:function(id,cb){
+    apis.get('uninstallApp',id,cb);
+   },
   setTimeout: (func, timeout) => {
     setTimeout(func, timeout);
   },
@@ -308,6 +326,7 @@ var pine = {
 }
 
 Emitter(pine.box);
+Emitter(pine.airSync);
 Emitter(pine);
 
 
@@ -315,6 +334,10 @@ process.on('message', (msg) => {
   if (msg.type == 'relay') {
     console.log('a relay message', msg);
     pine.box.emit(msg.body.body.type, { from: msg.body.from, body: msg.body.body.body });
+  }
+  else if (msg.type == 'airSync-receive') {
+    //console.log('a relay message', msg);
+    pine.airSync.emit('receive',  msg.body);
   }
   else if (msg.type == 'iac-request') {
     iacEvents.req.emit(msg.body.type, { key: msg.body.key, data: msg.body.data, access: msg.body.access, client: msg.body.client });
@@ -382,14 +405,17 @@ function runCode() {
     if (pine.modules.includes('http')) {
       const http = require('http');
     }
+    if (pine.modules.includes('zlib')) {
+      const zlib = require('zlib');
+    }
     if (pine.modules.includes('http2')) {
       const http2 = require('http2');
     }
     if (pine.modules.includes('dgram')) {
       const dgram = require('dgram');
     }
-    if (pine.modules.includes('dgram')) {
-      const dgram = require('dgram');
+    if (pine.modules.includes('buffer')) {
+      const Buffer = require('buffer');
     }
 
     'use strict';

@@ -1,7 +1,7 @@
 const { app, BrowserWindow, Tray, systemPreferences } = require('electron');
 const fs=require('fs');
 var backyard=null;
-
+//var prompt=require('./prompts/prompt.js');
 var setupRequired=false;
 var dirResolved=false;
 var appReady=false;
@@ -65,7 +65,6 @@ const gotTheLock=app.requestSingleInstanceLock();
 
 
 showLaunchPad=()=>{
-
   backyard.openApp('launchpad',(r)=>{
        if(!r){
          //forceQuit();

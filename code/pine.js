@@ -1,7 +1,6 @@
 const { app, BrowserWindow, Tray, systemPreferences } = require('electron');
 const fs=require('fs');
-var backyard=null;
-//var prompt=require('./prompts/prompt.js');
+var router=null;
 var setupRequired=false;
 var dirResolved=false;
 var appReady=false;
@@ -47,7 +46,7 @@ function init(){
     
     }
     else{
-  backyard=require("./host/backyard.js")({dataDir});
+  router=require("./router.js")({dataDir});
  showLaunchPad();
 }
 }
@@ -61,11 +60,10 @@ if(dirResolved&&appReady){
 
 app.name="Pine";
 app.clearRecentDocuments();
-const gotTheLock=app.requestSingleInstanceLock();
 
 
 showLaunchPad=()=>{
-  backyard.openApp('launchpad',(r)=>{
+  router.openApp('launchpad',(r)=>{
        if(!r){
          //forceQuit();
        }
@@ -74,16 +72,6 @@ showLaunchPad=()=>{
 }
 
 
-
-if (!gotTheLock) {
-  app.quit()
-} else {
-  app.on('second-instance', (event, commandLine, workingDirectory) => {
-    // Someone tried to run a second instance, we should focus our window.
-    if(!setupRequired)
-    { showLaunchPad();}
-  })
-}
 
 app.commandLine.appendSwitch('enable-transparent-visuals');
 
@@ -94,7 +82,7 @@ app.on('ready',()=>{
 
 
 app.on('window-all-closed', (e) =>{ 
-  e.preventDefault()
+  //e.preventDefault()
 })
 
 

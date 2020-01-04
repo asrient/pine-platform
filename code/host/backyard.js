@@ -330,7 +330,9 @@ var runtime = {
                 frame: false,
                 icon: dataDir + '/data/files/' + appId + '/' + this.activeApps[appId].info.icon,
                 webPreferences: {
-                    nodeIntegration: true,
+                    nodeIntegration: false,
+                    webSecurity: true,
+                    allowRunningInsecureContent: false,
                     experimentalFeatures: true,
                     partition: appId + pRand
                 }

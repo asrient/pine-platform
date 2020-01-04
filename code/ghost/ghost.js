@@ -26,9 +26,6 @@ var isReady = false;
 var appRec = null;
 var boxId = null;
 
-var filter = {
-    urls: ["*"]
-};
 /*
 win.webContents.session.webRequest.onBeforeSendHeaders(filter, (details, callback) => {
     details.requestHeaders['User-Agent'] = "Pine" ;
@@ -55,7 +52,17 @@ win.webContents.session.protocol.registerFileProtocol('files', (req, cb) => {
     //console.log('req url:',url);
     cb(dataDir + '/data/appData/files/' + appId + '/' + url);
 })
-
+var filter = {
+    urls: ["file://*"]
+};
+win.webContents.session.webRequest.onHeadersReceived((details, callback) => {
+    callback({
+      responseHeaders: {
+        ...details.responseHeaders,
+       // 'Content-Security-Policy': ['default-src \'none\'']
+      }
+    })
+  })
 
 ipc.on('open', (event, message) => {
     appId = message.appId;

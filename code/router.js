@@ -35,8 +35,44 @@ function createWindow(){
             partition: app.id 
         }
     }
-    var box = new electron.BrowserWindow(props)
-    box.loadFile('./ghost/ghost.html');
+    var box = new electron.BrowserWindow(props);
+    
+
+    box.webContents.session.protocol.registerFileProtocol('common', (req, cb) => {
+    var url = req.url.substr(9);
+    cb( dataDir + '/shared/' + url);
+})
+
+
+box.webContents.session.protocol.registerFileProtocol('source', (req, cb) => {
+    var url = req.url.substr(9);
+    if(url=='root'){
+        cb(dataDir + '/apps/' + app.id + '/source/' + app.info.entry);
+    }
+    else{
+        cb(dataDir + '/apps/' + app.id + '/source/' + url);
+    }
+})
+
+box.webContents.session.protocol.registerFileProtocol('files', (req, cb) => {
+    var url = req.url.substr(8);
+    //console.log('req url:',url);
+    cb( dataDir + '/apps/' + app.id + '/files/' + url);
+})
+
+
+box.loadURL('file://root');
+
+box.webContents.session.protocol.interceptFileProtocol('file',(req,cb)=>{
+    var url = req.url.substr(7);
+    console.log('--ACCESS FILE--',url);
+    if(url=='root'||url=='root/'){
+        cb(dir+'/ghost/ghost.html');
+    }
+    else{
+         cb( dataDir + '/apps/' + app.id + '/files/' + url);
+    }
+})
 }
 
 

@@ -3,7 +3,6 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0"> 
-    <link rel="stylesheet" type="text/css" href="styles.css"/>
   </head>
   <body>
     <div id="MAIN">
@@ -13,14 +12,149 @@
          <div id="BAR_TXT">Pine pizza</div> 
         </div> 
      <div style="height: 100%;">
-         <iframe id="APP_BOX" sandbox="allow-scripts allow-forms">
+         <div id="APP_BOX" sandbox="allow-scripts allow-forms">
            <div class="center" style="height:100%">
              LOADING
            </div>
-         </iframe>
+          </div>
      </div> 
      <div id="screen"></div> 
     </div>
   </body>
-  <script type="text/javascript" src="ghost.js"></script>
+  <script src="common://jquery.js" type="text/javascript"></script>
+
+  <script type="text/javascript">
+  $(document).ready(function () {
+    $.get('source://root',(data)=>{
+   $('#APP_BOX').html(data);
+  })
+});
+  </script>
+ <style>
+   *,
+*::before,
+*::after {
+  box-sizing: border-box;
+  outline: none;
+  -webkit-user-select: none;
+}
+a{
+  text-decoration: none;
+  color:inherit;
+}
+
+      html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -ms-overflow-style: scrollbar;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+    body{
+        margin:0px;
+        padding:0px;
+        width:100vw;
+        height:100vh;
+        overflow: hidden;
+    }
+    html,body{
+ font-family: 'Segoe UI', sans-serif;
+ font-size:1rem;
+ font-weight: 500;
+ color:#7a7a7a;
+}
+
+
+#BACKGROUND{
+  position: fixed;
+  top:0px;
+  left:0px;
+  height:100vh;
+  width:100vw;
+  overflow:hidden;
+  z-index: -1;
+}
+#MAIN{
+  position: fixed;
+  top:0px;
+  left:0px;
+  height:100vh;
+  width:100vw;
+  overflow: hidden;
+}
+#APP_BOX{
+ height: 100%;
+width:100vw;
+border: 0px;
+}
+#controls{
+  display: none;
+  position:fixed;
+  top:0px;
+  left:0px;
+  display: flex;
+  flex-direction: row;
+align-items: center;
+  justify-content: flex-start;
+  z-index: 11;
+  height:2rem;
+  width: 5rem;
+  -webkit-app-region: no-drag;
+  -webkit-user-select: none;
+}
+#BAR{
+   height:2rem;
+   display:block;
+  background:rgb(236, 236, 236);
+  color:rgb(107, 107, 107);
+    width:100vw; 
+  overflow: hidden;
+   z-index: 10;
+}
+#BAR_TXT{
+  margin-left:5rem;
+  padding-right:5rem;
+  display:flex;
+  align-items: center;
+  text-align: center;
+  justify-content:  center;
+  height:2rem;
+  overflow: hidden;
+    -webkit-app-region: drag;
+  -webkit-user-select: none;
+}
+.bar_butts{
+  height:0.85rem;
+  width:0.85rem;
+  border-radius: 100%;
+  margin:0.2rem;
+  margin-left:0.7rem;
+  margin-right:0rem;
+  background: rgb(170, 170, 170);
+  cursor: pointer;
+  display: flex;
+align-items: center;
+  justify-content: center;
+  -webkit-app-region:no-drag;
+}
+.bar_butt_red{
+  background: rgb(255, 63, 63);
+}
+.bar_butt_red:hover{
+  background: rgb(158, 0, 0);
+}
+.bar_butt_green{
+  background: rgb(0, 206, 10);
+}
+.bar_butt_green:hover{
+  background: rgb(0, 131, 17);
+}
+.bar_butt_yellow{
+  background: rgb(255, 174, 0);
+}
+.bar_butt_yellow:hover{
+  background: rgb(168, 115, 0);
+}
+
+</style> 
 </html>
+

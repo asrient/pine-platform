@@ -46,16 +46,16 @@ module.exports = function (appRec, dDir) {
         /**WINDOW RELATED */
         createWindow: createWindow(app, dataDir),
         getAllWindows: function () {
-            var wins = electron.getAllWindows();
+            var wins = electron.BrowserWindow.getAllWindows();
             return wins.map((win) => {
                 return winObj(win);
             })
         },
         getWindowById: function (id) {
-            return winObj(BrowserWindow.fromId(id));
+            return winObj(electron.BrowserWindow.fromId(id));
         },
         getFocusedWindow: function () {
-            return winObj(BrowserWindow.getFocusedWindow());
+            return winObj(electron.BrowserWindow.getFocusedWindow());
         },
         /**APP RELATED */
         app: {

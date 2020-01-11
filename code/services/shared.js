@@ -3,20 +3,70 @@
  * These are the shared services APIs accessable from both ghost and background
  */
 const fs = require('fs');
-const electron = require('electron');
+var electron = require('electron');
 const crypto = require('crypto');
 
 var createWindow = require('./createWindow.js');
+const winObj = require('./winObjCutter.js');
+
+if (electron.remote != undefined) {
+    electron = electron.remote;
+}
+
+function prox(func) {
+    return function (arg1, arg2, arg3, arg4, arg5) {
+        var res = func(arg1, arg2, arg3, arg4, arg5);
+        return res;
+    }
+}
 
 var app = null;
 var dataDir = null;
+
+function appEvents(event, cb) {
+    if (event == 'window-all-closed') {
+        electron.app.on(event, cb)
+    }
+    else if (event == 'ready') {
+        electron.app.on(event, cb)
+    }
+    else if (event == 'browser-window-created') {
+        electron.app.on(event, (e, win) => {
+            cb(e, winObj(win));
+        })
+    }
+}
 
 module.exports = function (appRec, dDir) {
     app = appRec;
     dataDir = dDir;
     return {
         version: '1.0',
-        createWindow:createWindow(app, dataDir),
-        
+        info: app,
+        /**WINDOW RELATED */
+        createWindow: createWindow(app, dataDir),
+        getAllWindows: function () {
+            var wins = electron.getAllWindows();
+            return wins.map((win) => {
+                return winObj(win);
+            })
+        },
+        getWindowById: function (id) {
+            return winObj(BrowserWindow.fromId(id));
+        },
+        getFocusedWindow: function () {
+            return winObj(BrowserWindow.getFocusedWindow());
+        },
+        /**APP RELATED */
+        app: {
+            quit: prox(electron.app.quit),
+            exit: prox(electron.app.exit),
+            isReady: prox(electron.app.isReady),
+            whenReady: prox(electron.app.whenReady),
+            setUserTasks: prox(electron.app.setUserTasks),
+            showAboutPanel: prox(electron.app.showAboutPanel),
+            on: appEvents,
+            info:app
+        }
     }
 }

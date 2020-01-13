@@ -12,7 +12,7 @@
          <div id="BAR_TXT">Pine pizza</div> 
         </div> 
      <div style="height: 100%;">
-         <div id="APP_BOX" sandbox="allow-scripts allow-forms">
+         <div id="APP_BOX">
            <div class="center" style="height:100%">
              LOADING
            </div>
@@ -21,7 +21,52 @@
      <div id="screen"></div> 
     </div>
   </body>
+
   <script src="common://jquery.js" type="text/javascript"></script>
+
+  <script type="text/javascript">
+  $('#BAR_TXT').html(pine.window.getTitle());
+   var titleChange=pine.window.setTitle;
+   pine.window.setTitle=function(title){
+     titleChange(title)
+    $('#BAR_TXT').html(title);
+   }
+   getControls = () => {
+            var red = '<div class="bar_butts bar_butt_red" onClick=pine.window.close()></div>';
+            var yellow = '<div class="bar_butts bar_butt_yellow" onClick=pine.window.minimize()></div>';
+            var green = '<div class="bar_butts bar_butt_green" onClick=pine.window.resize()></div>';
+            var grey = '<div class="bar_butts" ></div>';
+            var controls = red;
+            if (pine.window.isMinimizable()) {
+                controls += yellow;
+            }
+            else {
+                controls += grey;
+            }
+            if (pine.window.isMaximizable() && pine.window.isResizable()) {
+                controls += green;
+            }
+            return (controls)
+        }
+        getControlsDisabled = () => {
+            var grey = '<div class="bar_butts" ></div>';
+            var controls = grey + grey;
+            if (pine.window.isMaximizable()) {
+                controls += grey;
+            }
+            return (controls)
+        }
+
+        $('#controls').html(getControls());
+        
+        pine.window.on('focus',()=>{
+          $('#controls').html(getControls());
+        })
+
+        pine.window.on('blur',()=>{
+          $('#controls').html(getControlsDisabled());
+        })
+  </script>
 
   <script type="text/javascript">
   $(document).ready(function () {
@@ -30,6 +75,7 @@
   })
 });
   </script>
+
  <style>
    *,
 *::before,

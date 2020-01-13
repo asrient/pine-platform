@@ -27,6 +27,15 @@ function cutter(win) {
         resizable: win.resizable,
         closable: win.closable,
 
+        resize: function () {
+            if (win.isMaximized()) {
+                win.unmaximize();
+            }
+            else {
+                win.maximize();
+            }
+        },
+        send: prox(win.webContents.send),
         destroy: prox(win.destroy),
         close: prox(win.close),
         focus: prox(win.focus),

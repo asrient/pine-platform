@@ -43,22 +43,20 @@ module.exports = function (appRec, dDir) {
     return {
         version: '1.0',
         info: app,
-        /**WINDOW RELATED */
-        createWindow: createWindow(app, dataDir),
-        getAllWindows: function () {
-            var wins = electron.BrowserWindow.getAllWindows();
-            return wins.map((win) => {
-                return winObj(win);
-            })
-        },
-        getWindowById: function (id) {
-            return winObj(electron.BrowserWindow.fromId(id));
-        },
-        getFocusedWindow: function () {
-            return winObj(electron.BrowserWindow.getFocusedWindow());
-        },
-        /**APP RELATED */
         app: {
+            createWindow: createWindow(app, dataDir),
+            getAllWindows: function () {
+                var wins = electron.BrowserWindow.getAllWindows();
+                return wins.map((win) => {
+                    return winObj(win);
+                })
+            },
+            getWindowById: function (id) {
+                return winObj(electron.BrowserWindow.fromId(id));
+            },
+            getFocusedWindow: function () {
+                return winObj(electron.BrowserWindow.getFocusedWindow());
+            },
             quit: prox(electron.app.quit),
             exit: prox(electron.app.exit),
             isReady: prox(electron.app.isReady),
@@ -66,7 +64,7 @@ module.exports = function (appRec, dDir) {
             setUserTasks: prox(electron.app.setUserTasks),
             showAboutPanel: prox(electron.app.showAboutPanel),
             on: appEvents,
-            info:app
+            info: app
         }
     }
 }

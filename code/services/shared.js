@@ -8,6 +8,7 @@ const crypto = require('crypto');
 
 var createWindow = require('./createWindow.js');
 const winObj = require('./winObjCutter.js');
+const dataApis = require('./data.js');
 
 if (electron.remote != undefined) {
     electron = electron.remote;
@@ -65,6 +66,7 @@ module.exports = function (appRec, dDir) {
             showAboutPanel: prox(electron.app.showAboutPanel),
             on: appEvents,
             info: app
-        }
+        },
+        data: dataApis(app, dataDir)
     }
 }

@@ -1,6 +1,4 @@
 <html>
-    <link rel="stylesheet" type="text/css" href="common://common.css"/>
-    <script type="text/javascript" src="common://apis.js"></script>
  <body>
    <div id="all" class="center-col">
     
@@ -26,22 +24,15 @@
 
 <script>
 
-pine.init();
 
 window.setTimeout(()=>{
  // window.location.href="https://google.com";
 },3000);
 
 
-pine.info((info)=>{
-  document.getElementById('infobox').innerHTML=info;
-})
+  document.getElementById('infobox').innerHTML=pine.app.info.version;
 
-pine.isDarkMode((is)=>{
-if(is){
-  document.getElementById("all").style.backgroundColor="#272727";
-}
-})
+
 
 notify=()=>{
   let myNotification = new Notification('Amy Stone', {
@@ -61,7 +52,6 @@ pine.confirmClose((confirm)=>{
   },3000)
 })
 */
-
 
 
 </script>

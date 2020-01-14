@@ -19,7 +19,11 @@ function run() {
         on: function (event, cb) {
             electron.ipcMain.on(event, (e, args) => {
                 //disable webContents
-                e.sender = undefined;
+                var s = e.sender;
+                e.sender = s.id;
+                e.reply=function(channel,arg){
+                  s.send(channel,arg);
+                }
                 cb(e, args);
             })
         },
@@ -30,8 +34,8 @@ function run() {
                 cb(e, args);
             })
         },
-        sendTo: function(webId,event,args){
-            electron.webContents.fromId(webId).send(event,args);
+        sendTo: function (webId, event, args) {
+            electron.webContents.fromId(webId).send(event, args);
         },
         removeListener: electron.ipcMain.removeListener,
         removeAllListeners: electron.ipcMain.removeAllListeners

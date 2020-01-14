@@ -47,7 +47,7 @@ function init() {
   }
   else {
     //check for args to determine which app to run
-    Router('launchpad', dataDir, (router) => {
+    Router('id123', dataDir, (router) => {
       router.createWindow();
     });
 

@@ -8,7 +8,6 @@ const { fork } = require('child_process');
 var Emitter = require('component-emitter');
 var Datastore = require('nedb');
 
-var background = require('./ghost/background.js');
 var createWindow = require('./services/createWindow.js');
 
 var dir = electron.app.getAppPath();
@@ -17,16 +16,7 @@ var appsFile = null;
 var app = null;
 var appId = null;
 
-
-var router = {
-    createWindow: function () {
-        if (app != null)
-            createWindow();
-    }
-}
-
-
-module.exports = function (id, dDir, cb) {
+module.exports = function (id, dDir) {
     dataDir = dDir;
     appId = id;
     global.dataDir = dataDir;
@@ -36,10 +26,8 @@ module.exports = function (id, dDir, cb) {
         if (err == null && rec != null) {
             app = rec;
             global.app = app;
-            background = background(app, dataDir);
-            background.run();
             createWindow = createWindow(app, dataDir);
-            cb(router);
+            createWindow();
         }
         else {
             console.error("Cant find app in db");

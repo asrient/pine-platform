@@ -1,6 +1,7 @@
 const { app, BrowserWindow, Tray, systemPreferences } = require('electron');
 const fs = require('fs');
 var Router = require("./router.js");
+
 var setupRequired = false;
 var dirResolved = false;
 var appReady = false;
@@ -39,7 +40,6 @@ fs.readdir(dataDir, (err, info) => {
 })
 
 
-
 function init() {
   if (setupRequired) {
     console.log('setup required');
@@ -47,10 +47,13 @@ function init() {
   }
   else {
     //check for args to determine which app to run
-    Router('id123', dataDir, (router) => {
-      router.createWindow();
-    });
-
+    console.log(process.argv)
+    if(process.argv[2]!=undefined){
+      Router(process.argv[2], dataDir);
+    }
+    else{
+      Router('id123', dataDir);
+    }
   }
 }
 
@@ -75,7 +78,7 @@ app.on('ready', () => {
 
 
 app.on('window-all-closed', (e) => {
-  //e.preventDefault()
+  forceQuit();
 })
 
 

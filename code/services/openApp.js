@@ -1,6 +1,6 @@
 /**
  * @ASRIENT 14.1.20
- * Provides api to open a pine app
+ * Provides apis to open a pine app
  */
 const { remote, shell } = require('electron');
 const { spawn } = require("child_process");

@@ -12,6 +12,9 @@ var dataDir=electron.remote.getGlobal('dataDir');
 // load the shared apis set
 const pine=apis(app,dataDir);
 
+var _setImmediate = setImmediate;
+
 process.once('loaded', () => {
-    global.pine = pine
+    global.pine = pine;
+    global.setImmediate = _setImmediate;
   })

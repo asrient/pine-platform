@@ -3,7 +3,7 @@
  * Provides apis to open a pine app
  */
 const { remote, shell } = require('electron');
-const { spawn } = require("child_process");
+const { exec } = require("child_process");
 var Datastore = require('nedb');
 
 const exePath = remote.app.getPath('exe');
@@ -24,8 +24,7 @@ function open(ns) {
 }
 
 function openById(id) {
-    spawn(exePath, [resPath, id]);
-    //remote.app.relaunch({ args: process.argv.slice(1) })
+    exec(exePath+' '+resPath+' '+ id);
 }
 
 module.exports = function (dDir) {

@@ -53,6 +53,7 @@ module.exports = function (appRec, dDir) {
     app = appRec;
     dataDir = dDir;
     var openApp = require("./openApp.js")(dataDir);
+    var appInstaller = require('./appInstaller.js')(dDir);
     var apis = {
         version: '1.0',
         info: app,
@@ -100,7 +101,13 @@ module.exports = function (appRec, dDir) {
         addShortcut: function(){
              shortcuts(dataDir).add(app.id);
         },
-        include
+        include,
+        installApp:function(pth,cb){
+            appInstaller.install(app.id,dataDir+'/apps/'+app.id+'/files/'+pth,cb);
+        },
+        uninstallApp:function(id){
+            appInstaller.uninstall(id);
+        }
     }
 
     apis.ipc.invoke = undefined;

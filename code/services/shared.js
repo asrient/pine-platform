@@ -11,7 +11,7 @@ var createWindow = require('./createWindow.js');
 const winObj = require('./winObjCutter.js');
 const dataApis = require('./data.js');
 const ext = require('./extension.js');
-
+const shortcuts = require('./shortcuts.js');
 
 function prox(func) {
     return function (arg1, arg2, arg3, arg4, arg5) {
@@ -35,6 +35,18 @@ function appEvents(event, cb) {
             cb(e, winObj(win));
         })
     }
+}
+
+const publicMods=['net','stream','http','zlib','http2','dgram','buffer'];
+const systemMods=['process','nedb','os','fs'];
+
+function include(mod){
+    if (systemMods.includes(mod) && app.app_type == 'system_app') {
+        return require(mod);
+      }
+      else if (publicMods.includes(mod)) {
+        return require(mod);
+      }
 }
 
 module.exports = function (appRec, dDir) {
@@ -84,7 +96,11 @@ module.exports = function (appRec, dDir) {
         window: winObj(electron.remote.getCurrentWindow()),
         ipc: electron.ipcRenderer,
         openApp: openApp.open,
-        openAppById: openApp.openById
+        openAppById: openApp.openById,
+        addShortcut: function(){
+             shortcuts(dataDir).add(app.id);
+        },
+        include
     }
 
     apis.ipc.invoke = undefined;

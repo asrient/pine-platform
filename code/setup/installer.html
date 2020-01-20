@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<title>Installer</title>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="./styles.css" />
+</head>
+
+<body>
+    <div id="MAIN">
+        <div id="BACKGROUND"></div>
+        <div id="controls"></div>
+        <div style="height: 100%;">
+            <div id="APP_BOX">
+                <div id="b1">
+                    <div class="ink-black base-light size-xxl">
+                        <div id="b1-txt">Welcome to <br/> Pine</div>
+                    </div>
+                </div>
+                <div id="b2">
+                    <div id="b2-s1">
+                        <div id="b2s1-p1">
+                            <div class="size-s base-light ink-orange">
+                              Store all data in
+                            </div>
+                            <div style="font-size: 0.8rem;padding-top:0.5rem;">
+                                <span id="loc-txt">Home directory</span><span id="chng-btn">Edit</span>
+                            </div>
+                            </div>
+                        <div  class="b2s1-p center"><div class="btn size-xs" id="cncl-btn">Cancel</div> 
+                        <div class="btn size-xs" id="install-btn">Install</div></div>
+                    </div>
+                    <div id="b2-s2" class="center">
+                       <div class="loader"></div>
+                    </div>
+                    <div id="b2-s3">
+                        <div  class="center">Pine installed successfully</div>
+                        <div class="center"><div class="btn" id="cls-btn">Close</div></div>
+                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <style>
+        #b2-s3{
+            display: none;
+            height: 8rem;
+            grid-template-columns: 75% 25%;
+        }
+        #b2-s2{
+            display: none;
+            height: 8rem;
+        }
+        .btn{
+            display: inline;
+            padding: 0.5rem 1rem;
+            margin: 0.1rem 0.5rem;
+            background-color: rgb(236, 236, 236);
+            color: rgb(61, 61, 61);
+            border-radius: 2rem;
+            font-weight: 400;
+        }
+        .btn:hover{
+            opacity: 0.7;
+        }
+        #chng-btn{
+            padding: 0.07rem 0.4rem;
+            margin:0.2rem;
+            color:rgb(0, 153, 255);
+            background: rgb(218, 239, 255);
+            border-radius: 1rem;
+        }
+        #chng-btn:hover{
+            background: #e5f7ff;
+        }
+        #b2s1-p1{
+            overflow: hidden;
+        }
+        #b2-s1{
+            display: grid;
+            grid-template-columns: 60% 40%;
+            height: 6rem;
+        }
+        #b1 {
+            padding: 0.5rem;
+            padding-top: 2rem;
+            -webkit-app-region: drag;
+            -webkit-user-select: none;
+            background-color: rgb(236, 236, 236);
+        }
+        #b2{
+            padding: 0.5rem;
+        }
+    </style>
+    <script>
+        const electron = require('electron');
+        const $ = require('jquery');
+        const win = electron.remote.getCurrentWindow();
+        win.setResizable(false);
+        getControls = () => {
+            var red = '<div class="bar_butts bar_butt_grey"></div>';
+            var yellow = '<div class="bar_butts bar_butt_yellow" onClick=win.minimize()></div>';
+            var grey = '<div class="bar_butts" ></div>';
+            var controls = grey + yellow;
+            return (controls)
+        }
+        getControlsDisabled = () => {
+            var grey = '<div class="bar_butts" ></div>';
+            var controls = grey + grey;
+            return (controls)
+        }
+
+        $('#controls').html(getControls());
+
+        win.on('focus', () => {
+            $('#controls').html(getControls());
+        })
+
+        win.on('blur', () => {
+            $('#controls').html(getControlsDisabled());
+        })
+    </script>
+    <script src="./installer.js"></script>
+</body>
+
+</html>

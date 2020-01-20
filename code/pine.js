@@ -1,11 +1,13 @@
 const { app, BrowserWindow, Tray, systemPreferences } = require('electron');
 const fs = require('fs');
 var Router = require("./router.js");
+var setup = require("./setup.js");
 
 var setupRequired = false;
 var dirResolved = false;
 var appReady = false;
 
+const version = '1.0';
 var dataDir = app.getPath('home') + '/Pine';
 
 fs.readdir(dataDir, (err, info) => {
@@ -24,12 +26,14 @@ fs.readdir(dataDir, (err, info) => {
         }
       })
     }
-    else if (info.includes('data')) {
+    else if (info.includes('core')) {
       dirResolved = true;
       TryInit();
     }
     else {
-      forceQuit();
+      setupRequired = true;
+      dirResolved = true;
+      TryInit();
     }
   }
   else {
@@ -42,18 +46,34 @@ fs.readdir(dataDir, (err, info) => {
 
 function init() {
   if (setupRequired) {
-    console.log('setup required');
-
+    console.log('setup required!');
+    setup.installer();
   }
   else {
-    //check for args to determine which app to run
-    console.log(process.argv)
-    if(process.argv[2]!=undefined){
-      Router(process.argv[2], dataDir);
-    }
-    else{
-      Router('id123', dataDir);
-    }
+    //check if pine has been recently updated
+    fs.readFile(dataDir + '/core/info.json', 'utf-8', (err, info) => {
+      if (err == null) {
+        info = JSON.parse(info);
+        if (info.version == version) {
+          //check for args to determine which app to run
+          console.log(process.argv)
+          if (process.argv[2] != undefined) {
+            Router(process.argv[2], dataDir);
+          }
+          else {
+            Router('launchpad', dataDir);
+          }
+        }
+        else if (version > info.version) {
+          //pine has been updated!
+          console.log('setup required! [POST UPDATE]');
+          setup.updater();
+        }
+      }
+      else {
+        forceQuit();
+      }
+    })
   }
 }
 

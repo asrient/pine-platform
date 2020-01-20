@@ -9,7 +9,6 @@ var shortcuts = require('./shortcuts.js');
 
 var appsFile = null;
 var showCase = null;
-var nameSpaces = null;
 var dataDir = null;
 
 function newId(len = 7) {
@@ -108,7 +107,7 @@ function rollback(id) {
     //delete the folders
     fs.readdir(dataDir + '/apps/' + id, (err, dir) => {
         if (dir != undefined) {
-            rimraf(dataDir + '/data/files/' + id, () => { })
+            rimraf(dataDir + '/apps/' + id, () => { })
         }
     })
     shortcuts.remove(id, () => {
@@ -216,9 +215,8 @@ function uninstall(appId, id, cb) {
 
 module.exports =  function (dDir) {
         dataDir = dDir;
-        appsFile = new Datastore({ filename: dataDir + '/data/core/apps.txt', autoload: true });
-        nameSpaces = new Datastore({ filename: dataDir + '/data/core/nameSpaces.txt', autoload: true });
-        showCase = new Datastore({ filename: dataDir + '/data/appData/db/launchpad/showCase.txt', autoload: true });
+        appsFile = new Datastore({ filename: dataDir + '/core/apps.txt', autoload: true });
+        showCase = new Datastore({ filename: dataDir + '/apps/launchpad/db/showCase.txt', autoload: true });
 
         return {install, uninstall}
     }

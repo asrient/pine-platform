@@ -1,2 +1,0 @@
-{"id":"launchpad","name":"Launch Pad","name_space":"core.pine.launchpad","_id":"1"}
-{"id":"moments","name":"Moments","name_space":"core.pine.moments","_id":"2"}

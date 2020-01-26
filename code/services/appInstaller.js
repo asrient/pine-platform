@@ -159,7 +159,8 @@ function setupFolder(cb) {
 function install(appId, path, cb = function () { }) {
     //read->extract->write
     //check for .pine extension
-
+    appsFile = new Datastore({ filename: dataDir + '/core/apps.txt', autoload: true });
+    showCase = new Datastore({ filename: dataDir + '/apps/launchpad/db/showCase.txt', autoload: true });
     if (path.slice(path.length - 5) == '.pine') {
         setupFolder((id) => {
             tar.x(  // or tar.extract
@@ -203,6 +204,8 @@ function install(appId, path, cb = function () { }) {
 }
 
 function uninstall(appId, id, cb) {
+    appsFile = new Datastore({ filename: dataDir + '/core/apps.txt', autoload: true });
+    showCase = new Datastore({ filename: dataDir + '/apps/launchpad/db/showCase.txt', autoload: true });
     if (appId == 'launchpad' || appId == 'appstore') {
         rollback(id);
     }
@@ -215,8 +218,5 @@ function uninstall(appId, id, cb) {
 
 module.exports =  function (dDir) {
         dataDir = dDir;
-        appsFile = new Datastore({ filename: dataDir + '/core/apps.txt', autoload: true });
-        showCase = new Datastore({ filename: dataDir + '/apps/launchpad/db/showCase.txt', autoload: true });
-
         return {install, uninstall}
     }

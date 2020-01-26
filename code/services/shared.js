@@ -37,16 +37,16 @@ function appEvents(event, cb) {
     }
 }
 
-const publicMods=['net','stream','http','zlib','http2','dgram','buffer'];
-const systemMods=['process','nedb','os','fs'];
+const publicMods = ['net', 'stream', 'http', 'zlib', 'http2', 'dgram', 'buffer','crypto'];
+const systemMods = ['process', 'nedb', 'os', 'fs'];
 
-function include(mod){
+function include(mod) {
     if (systemMods.includes(mod) && app.app_type == 'system_app') {
         return require(mod);
-      }
-      else if (publicMods.includes(mod)) {
+    }
+    else if (publicMods.includes(mod)) {
         return require(mod);
-      }
+    }
 }
 
 module.exports = function (appRec, dDir) {
@@ -98,19 +98,33 @@ module.exports = function (appRec, dDir) {
         ipc: electron.ipcRenderer,
         openApp: openApp.open,
         openAppById: openApp.openById,
-        addShortcut: function(){
-             shortcuts(dataDir).add(app.id);
+        addShortcut: function () {
+            shortcuts(dataDir).add(app.id);
         },
         include,
-        installApp:function(pth,cb){
-            appInstaller.install(app.id,dataDir+'/apps/'+app.id+'/files/'+pth,cb);
+        installApp: function (pth, cb) {
+            appInstaller.install(app.id, dataDir + '/apps/' + app.id + '/files/' + pth, cb);
         },
-        uninstallApp:function(id){
+        uninstallApp: function (id) {
             appInstaller.uninstall(id);
         }
     }
 
     apis.ipc.invoke = undefined;
+    if (app.app_type == 'system_app') {
+        apis.dialog = electron.remote.dialog;
+        apis.paths = {
+            data: dataDir,
+            pictures: electron.remote.app.getPath('pictures'),
+            downloads: electron.remote.app.getPath('downloads'),
+            temp: electron.remote.app.getPath('temp'),
+            videos: electron.remote.app.getPath('videos'),
+            userData: electron.remote.app.getPath('userData'),
+            home: electron.remote.app.getPath('home'),
+            desktop: electron.remote.app.getPath('desktop'),
+            music: electron.remote.app.getPath('music'),
+        }
+    }
 
     return apis;
 }

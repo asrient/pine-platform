@@ -8,14 +8,6 @@ $("#bdy").html(
 '<div>  Hello</div>'
 );
 
-
-
-
-
-
-
-
-
 /*
 pine.isDarkMode((is)=>{
 if(is){

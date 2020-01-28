@@ -133,6 +133,7 @@
     font-size: 1rem;
     font-weight: 500;
     color: #7a7a7a;
+    background-color: #F2F2F2;
   }
 
 
@@ -180,11 +181,13 @@
     position: fixed;
     height: 2rem;
     display: block;
-    background: rgb(236, 236, 236);
-    color: rgb(107, 107, 107);
+    background: linear-gradient(rgba(233,231,233,0.6),rgba(187,186,187,0.6));
+    color: rgba(0, 0, 0,0.76);
+    backdrop-filter: blur(20px);
     width: 100vw;
     overflow: hidden;
     z-index: 10;
+    border-bottom:1.4px rgba(0, 0, 0, 0.1) solid;
   }
 
   #BAR_TXT {
@@ -207,7 +210,7 @@
     margin: 0.2rem;
     margin-left: 0.7rem;
     margin-right: 0rem;
-    background: rgb(170, 170, 170);
+    background: rgba(0, 0, 0, 0.205);
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -216,7 +219,8 @@
   }
 
   .bar_butt_red {
-    background: rgb(255, 63, 63);
+    background: #FF6157;
+    border: 0.5px rgba(0,0,0,0.15) solid;
   }
 
   .bar_butt_red:hover {
@@ -224,7 +228,8 @@
   }
 
   .bar_butt_green {
-    background: rgb(0, 206, 10);
+    background: #2ACB42;
+    border: 0.5px rgba(0,0,0,0.15) solid;
   }
 
   .bar_butt_green:hover {
@@ -232,7 +237,8 @@
   }
 
   .bar_butt_yellow {
-    background: rgb(255, 174, 0);
+    background: #FFC12F;
+    border: 0.5px rgba(0,0,0,0.15) solid;
   }
 
   .bar_butt_yellow:hover {

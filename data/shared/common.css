@@ -67,7 +67,7 @@ background:linear-gradient(#65AFFA,#0E81FF);
 border:0.5px rgba(0, 0, 0, 0.1) solid;
 box-shadow: 0 0.5px 1px rgba(0, 0, 0, 0.28);
 color:white;
-cursor: pointer;
+cursor: url("common://cursors/poke.cur"),auto;
 transition-property: all;
 transition-duration: 100ms;
 }

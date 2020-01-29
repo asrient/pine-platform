@@ -5,7 +5,7 @@
   },
   "author": "asrient",
   "license": "ISC",
-  "description": "Get all the apps you love, here and everywhere else.",
+  "description": "Run Pine apps on your computer",
   "name": "pine",
   "version": "1.0.0",
   "homepage": "https://github.com/asrient",
@@ -194,23 +194,25 @@
     "build_linux": "electron-builder build --linux"
   },
   "build": {
-    "appId": "pizza.pine.apple",
+    "appId": "app.pine.desktop",
     "productName": "Pine",
-    "copyright": "@ASRIENT Winter 2019 - all writes welcomed.",
+    "copyright": "@ASRIENT",
     "win": {
       "target": [
         "appx",
         "msi"
-      ]
+      ],
+      "icon":"icon.ico",
+      "publisherName":"ASRIENT"
     },
     "linux": {
       "target": "deb",
       "maintainer": "asrient",
       "executableName": "pine",
-      "icon": "./host/163x151.png",
-      "synopsis": "Get all the apps you love, here and everywhere else.",
+      "icon": "./assets/icon.png",
+      "synopsis": "Run Pine apps on your computer",
       "category": "Utility",
-      "desktop": "./host/info.desktop"
+      "desktop": "./assets/info.desktop"
     }
   }
 }

@@ -12,6 +12,7 @@ const winObj = require('./winObjCutter.js');
 const dataApis = require('./data.js');
 const ext = require('./extension.js');
 const shortcuts = require('./shortcuts.js');
+const media = require('./media.js');
 
 function prox(func) {
     return function (arg1, arg2, arg3, arg4, arg5) {
@@ -81,6 +82,7 @@ module.exports = function (appRec, dDir) {
             info: app
         },
         data: dataApis(app, dataDir),
+        media: media(app, dataDir),
         extension: {
             include: function (ns, extName, cb) {
                 appsFile = new Datastore({ filename: dataDir + '/core/apps.txt', autoload: true });

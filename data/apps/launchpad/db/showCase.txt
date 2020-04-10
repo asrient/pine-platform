@@ -1,2 +1,3 @@
 {"id":"id123","name":"Tips","name_space":"lol.pine.about","icon":"id123.png","app_type":"system_app","_id":"1"}
 {"id":"moments","name":"Moments","name_space":"core.pine.moments","icon":"moments.png","app_type":"system_app","_id":"2"}
+{"id":"messages","name":"Messages","name_space":"core.pine.messages","icon":"messages.png","app_type":"system_app","_id":"3"}

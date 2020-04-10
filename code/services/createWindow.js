@@ -62,8 +62,6 @@ function api (){
         cb(dataDir + '/apps/' + app.id + '/files/' + url);
     })
 
-    box.loadURL('file://root');
-
     box.webContents.session.protocol.interceptFileProtocol('file', (req, cb) => {
         var url = req.url.substr(7);
         console.log('--ACCESS FILE--', url);
@@ -75,6 +73,8 @@ function api (){
         }
     })
 
+    box.loadURL('file://root');
+    
     return winObj(box);
 }
 

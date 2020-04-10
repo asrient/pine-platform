@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <title>Messages</title>
+</head>
+
+<body>
+  <div id="root">
+    <div class="center">Messages</div>
+  </div>
+  </div>
+</body>
+<style>
+  body {
+    background-color: rgb(255, 255, 255) !important;
+    height: 100vh;
+  }
+
+  #root {
+    height: 100vh;
+    overflow: auto;
+  }
+
+  ::-webkit-scrollbar {
+    width: 9px;
+    margin: 2px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    display: block;
+    border-radius: 7px;
+    background: #47474757;
+  }
+</style>
+<script>
+  pine.window.hideTitleBar();
+  pine.window.setSize(400, 650);
+  pine.window.center();
+  pine.window.setMinimumSize(370, 600);
+  pine.window.setMaximumSize(400, 650);
+  pine.window.setMaximizable(false);
+  pine.window.updateControls();
+</script>
+<script type="text/javascript" src="source://messages.js"></script>
+
+</html>

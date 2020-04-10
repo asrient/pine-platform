@@ -3,7 +3,6 @@
 *::after {
   box-sizing: border-box;
   outline: none;
-  -webkit-user-select: none;
 }
 a{
   text-decoration: none;
@@ -15,6 +14,7 @@ a{
   -ms-text-size-adjust: 100%;
   -ms-overflow-style: scrollbar;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-user-select: none;
 }
     body{
         margin:0px;
@@ -55,10 +55,10 @@ p {
 }
 button{
 font-family: 'Segoe UI', sans-serif;
-font-size: 1rem;
+font-size: 0.9rem;
 font-weight: 400;
 border-radius: 0.5rem;
-padding: 0.3rem;
+padding: 0.15rem;
 padding-left: 1rem;
 padding-right: 1rem;
 margin:0.2rem;

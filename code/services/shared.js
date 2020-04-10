@@ -13,6 +13,7 @@ const dataApis = require('./data.js');
 const ext = require('./extension.js');
 const shortcuts = require('./shortcuts.js');
 const media = require('./media.js');
+const airPeer = require('./airPeer/lib.js');
 
 function prox(func) {
     return function (arg1, arg2, arg3, arg4, arg5) {
@@ -109,7 +110,8 @@ module.exports = function (appRec, dDir) {
         },
         uninstallApp: function (id) {
             appInstaller.uninstall(id);
-        }
+        },
+        airPeer
     }
 
     apis.ipc.invoke = undefined;

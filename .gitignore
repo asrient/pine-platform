@@ -41,3 +41,12 @@ jspm_packages/
 .dump/
 
 code/dist
+
+data/apps/moments/db/*
+data/apps/moments/files/*
+
+data/apps/messages/db/*
+data/apps/messages/files/*
+
+data/apps/id123/db/*
+data/apps/id123/files/*

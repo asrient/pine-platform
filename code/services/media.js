@@ -11,6 +11,12 @@ var mime = require('mime-types');
 var Exif = require('exif').ExifImage;
 var Jimp = require('jimp');
 const sharp = require('sharp');
+var FFmpeg = require('fluent-ffmpeg');
+var ffmpegPath = require('ffmpeg-static');
+var ffprobePath = require('ffprobe-static');
+
+FFmpeg.setFfmpegPath(ffmpegPath);
+FFmpeg.setFfprobePath(ffprobePath);
 
 var app = null;
 var dataDir = null;
@@ -78,19 +84,6 @@ const api = {
             if (out != this.file) {
                 out = filesDir + '/' + out;
             }
-            /*this.getInfo((info) => {
-                if (info.orientation != undefined && info.orientation != 1) {
-                    var ori = info.orientation;
-                    Jimp.read(this.file).then(image => {
-                        image.write(out, () => {
-                            cb(ori)
-                        });
-                    });
-                }
-                else {
-                    cb(0);
-                }
-            })*/
             sharp(this.file)
                 .rotate()
                 .toFile(out, (err) => {
@@ -101,19 +94,37 @@ const api = {
             if (out != this.file) {
                 out = filesDir + '/' + out;
             }
-            /*Jimp.read(this.file).then(image => {
-                image.resize(Jimp.AUTO, size, () => {
-                    image.write(out, () => {
-                        cb(1)
-                    });
-                });
-            });*/
             sharp(this.file)
                 .rotate()
                 .resize({ height: size })
                 .toFile(out, (err) => {
                     cb(1)
                 });
+        }
+    },
+    Video: class {
+        file = null;
+        proceed = false;
+        constructor(pth) {
+            this.filesDir=filesDir;
+            this.file = filesDir + '/' + pth;
+            const types = ['video/mp4', 'video/avi','video/3gp','video/avi'];
+            if (!types.includes(mime.lookup(this.file))) {
+                this.file = null;
+            }
+        }
+        editor(){
+            if(this.file!=null){
+                return new FFmpeg(this.file);
+            }
+        }
+        getInfo(cb){
+            new FFmpeg.Metadata(
+                this.file,
+                (metadata, err)=> {
+                    cb(metadata);
+                }
+            );
         }
     }
 }

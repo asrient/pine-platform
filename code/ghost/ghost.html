@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-  <link rel="stylesheet" type="text/css" href="common://common.css"/>
+  <link rel="stylesheet" type="text/css" href="common://common.css" />
 </head>
 
 <body>
@@ -34,16 +34,16 @@
     titleChange(title)
     $('#BAR_TXT').html(title);
   }
-  pine.window.showTitleBar=function(){
+  pine.window.showTitleBar = function () {
     $('#BAR').css({ display: 'block' })
   }
-  pine.window.hideTitleBar=function(){
+  pine.window.hideTitleBar = function () {
     $('#BAR').css({ display: 'none' })
   }
-  pine.window.titleBarColor=function(color){
+  pine.window.titleBarColor = function (color) {
     $('#BAR').css({ backgroundColor: color })
   }
-  pine.window.overlapTitleBar=function(){
+  pine.window.overlapTitleBar = function () {
     $('#BAR').css({ position: 'fixed' })
   }
   pine.window.showControls = function () {
@@ -85,6 +85,10 @@
     $('#controls').html(getControls());
   })
 
+  pine.window.updateControls = function () {
+    $('#controls').html(getControls());
+  }
+
   pine.window.on('blur', () => {
     $('#controls').html(getControlsDisabled());
   })
@@ -105,7 +109,7 @@
     box-sizing: border-box;
     outline: none;
     -webkit-user-select: none;
-    cursor: url("common://cursors/pointer.cur"),auto;
+    cursor: url("common://cursors/pointer.cur"), auto;
   }
 
   a {
@@ -182,13 +186,13 @@
     position: fixed;
     height: 2rem;
     display: block;
-    background: linear-gradient(rgba(233,231,233,0.6),rgba(187,186,187,0.6));
-    color: rgba(0, 0, 0,0.76);
+    background: linear-gradient(rgba(233, 231, 233, 0.6), rgba(187, 186, 187, 0.6));
+    color: rgba(0, 0, 0, 0.76);
     backdrop-filter: blur(20px);
     width: 100vw;
     overflow: hidden;
     z-index: 10;
-    border-bottom:1.4px rgba(0, 0, 0, 0.1) solid;
+    border-bottom: 1.4px rgba(0, 0, 0, 0.1) solid;
   }
 
   #BAR_TXT {
@@ -220,7 +224,7 @@
 
   .bar_butt_red {
     background: #FF6157;
-    border: 0.5px rgba(0,0,0,0.15) solid;
+    border: 0.5px rgba(0, 0, 0, 0.15) solid;
   }
 
   .bar_butt_red:hover {
@@ -229,7 +233,7 @@
 
   .bar_butt_green {
     background: #2ACB42;
-    border: 0.5px rgba(0,0,0,0.15) solid;
+    border: 0.5px rgba(0, 0, 0, 0.15) solid;
   }
 
   .bar_butt_green:hover {
@@ -238,7 +242,7 @@
 
   .bar_butt_yellow {
     background: #FFC12F;
-    border: 0.5px rgba(0,0,0,0.15) solid;
+    border: 0.5px rgba(0, 0, 0, 0.15) solid;
   }
 
   .bar_butt_yellow:hover {

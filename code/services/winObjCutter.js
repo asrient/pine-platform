@@ -35,6 +35,7 @@ function cutter(win) {
                 win.maximize();
             }
         },
+        loadURL:prox(win.loadURL),
         send: prox(win.webContents.send),
         destroy: prox(win.destroy),
         close: prox(win.close),

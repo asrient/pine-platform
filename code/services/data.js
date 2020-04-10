@@ -7,6 +7,7 @@ const fs = require('fs');
 const crypto = require('crypto');
 var Datastore = require('nedb');
 var sqlite3 = require('sqlite3');
+const ds = require('data-store');
 
 var app = null;
 var dataDir = null;
@@ -15,6 +16,9 @@ var filesDir = null;
 var sourceDir = null;
 
 const api = {
+    dictionary: function (pth) {
+        return ds({ path: dbDir + '/' + pth })
+    },
     store: function (pth) {
         return new Datastore({ filename: dbDir + '/' + pth, autoload: true });
     },

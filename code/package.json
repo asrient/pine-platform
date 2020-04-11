@@ -206,6 +206,7 @@
   "build": {
     "appId": "app.pine.desktop",
     "productName": "Pine",
+    "asar": false,
     "copyright": "@ASRIENT",
     "win": {
       "target": [

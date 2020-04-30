@@ -95,7 +95,7 @@
     "isbinaryfile": "^4.0.2",
     "isexe": "^2.0.0",
     "jimp": "^0.9.3",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "js-yaml": "^3.13.1",
     "json-buffer": "^3.0.0",
     "json-schema-traverse": "^0.4.1",

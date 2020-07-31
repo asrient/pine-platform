@@ -51,7 +51,7 @@
     "deep-extend": "^0.6.0",
     "defer-to-connect": "^1.0.2",
     "dmg-builder": "^21.1.5",
-    "dot-prop": "^4.2.0",
+    "dot-prop": "^5.1.1",
     "dotenv": "^8.0.0",
     "dotenv-expand": "^5.1.0",
     "duplexer3": "^0.1.4",

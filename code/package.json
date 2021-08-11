@@ -129,7 +129,7 @@
     "path-exists": "^3.0.0",
     "path-is-inside": "^1.0.2",
     "path-key": "^2.0.1",
-    "path-parse": "^1.0.6",
+    "path-parse": "^1.0.7",
     "pify": "^3.0.0",
     "prepend-http": "^2.0.0",
     "pseudomap": "^1.0.2",

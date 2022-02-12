@@ -12,7 +12,7 @@
   "main": "pine.js",
   "dependencies": {
     "7zip-bin": "^5.0.3",
-    "ajv": "^6.10.2",
+    "ajv": "^6.12.3",
     "ajv-keywords": "^3.4.1",
     "ansi-align": "^3.0.0",
     "ansi-regex": "^4.1.0",

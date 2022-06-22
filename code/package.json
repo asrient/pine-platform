@@ -74,7 +74,7 @@
     "get-caller-file": "^2.0.5",
     "get-stream": "^3.0.0",
     "global-dirs": "^0.1.1",
-    "got": "^9.6.0",
+    "got": "^11.8.5",
     "graceful-fs": "^4.2.0",
     "has-flag": "^3.0.0",
     "has-yarn": "^2.1.0",

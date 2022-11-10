@@ -1,6 +1,6 @@
 {
   "devDependencies": {
-    "electron": "^7.1.2",
+    "electron": "^18.3.7",
     "electron-builder": "^21.1.5"
   },
   "author": "asrient",
